@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+	<title>does this actually work?</title>
+	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel = "stylesheet" href = "http://cdn.ink.sapo.pt/2.1.1/css/ink-min.css" />
+</head>
+<body>
+    <div class="ink-grid">
+    <div class"column-group">
+    <div style="background-color:black; color:white;" class="large-100">
+	<h1>Dat nodeJS tho</h1>
+    </div>
+    </div>
+    <div class="large-50">
+    <p id="funny">LOLz</p>
+	<marquee id="raw">RAW</marquee>
+	<p id="hello">qweqr</p>
+	<p id="asdf">asdf</p>
+    </div>
+    <div class="large-50">
+	<img style="padding-top: 10px;" id="pie"></img>
+    <button style="padding-top:5px">POINTLESS</button>
+    </div>
+    </div>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	var socket = io.connect('http://localhost:3000');
+	socket.on('news', function (data) {
+    	socket.emit('my other event', { my: 'data'});
+    	display(data);
+    });
+    socket.on('smallarray', function (data) {
+        $('#funny').text(data);
+    });
+
+
+    //HUGEFREAKINARRAY STUFF
+    // var cash = [];
+    // var cashLength = 0;
+    // var counterInitial = 0;
+    // socket.on('prearray', function (data) { cashLength = data; });
+    // socket.on('array', function (data) {          //recieve data and put into an array in order
+    //      cash[counterInitial] = data;
+    //      counterInitial++;
+    // });
+    // var count = 0;
+    // setInterval( function() {
+    //     count++;
+    //     if (count < cashLength) { 
+    //         console.log(cashLength + " : " + count);
+    //         $('#pie').attr('src', cash[count]);
+    //     };
+    // }, 20);
+    
+//
+
+    //WORKING NO TOUCHING
+
+    socket.on('array', function (data) {
+        socket.emit('event work', "next");
+        $('#pie').attr('src', data);
+    });
+    
+
+    var display = function(asdf) {
+    	$('#raw').text(JSON.stringify(asdf));
+    	$('#hello').text("hello: " + asdf.hello);
+    	$('#asdf').text("welcome: " + asdf.welcome);
+    }
+	</script>
+</body>
+</html>
